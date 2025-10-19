@@ -1,0 +1,526 @@
+/* Tailwind CSS 프레임워크 import */
+@import "tailwindcss";
+
+/* 커스텀 폰트 정의 - Regular 폰트 */
+@font-face {
+  font-family: "Regular";
+  src: url("/fonts/regular.otf");
+}
+
+/* 커스텀 폰트 정의 - Medium 폰트 */
+@font-face {
+  font-family: "Medium";
+  src: url("/fonts/medium.otf");
+}
+
+/* 커스텀 폰트 정의 - SemiBold 폰트 */
+@font-face {
+  font-family: "SemiBold";
+  src: url("/fonts/semibold.otf");
+}
+
+/* 커스텀 폰트 정의 - Bold 폰트 */
+@font-face {
+  font-family: "Bold";
+  src: url("/fonts/bold.otf");
+}
+
+/* 모든 요소에 스크롤바 색상 적용 */
+* {
+  scrollbar-color: var(--color-dark-100) var(--color-black);
+}
+
+/* CSS 변수 정의 - 그라디언트 색상 */
+:root {
+  --gradient-color: linear-gradient(
+    to bottom right,
+    #0894ff 0%,
+    #c959dd 34%,
+    #ff2e54 68%,
+    #ff9004
+  );
+}
+
+/* Tailwind 테마 커스터마이징 - 폰트 및 색상 변수 */
+@theme {
+  --font-regular: "Regular";      /* 일반 폰트 */
+  --font-medium: "Medium";         /* 중간 굵기 폰트 */
+  --font-semibold: "SemiBold";     /* 세미볼드 폰트 */
+  --font-bold: "Bold";              /* 볼드 폰트 */
+  --color-primary: #0071e3;        /* 메인 브랜드 색상 (파란색) */
+  --color-dark-100: #86868b;       /* 어두운 회색 */
+  --color-dark-200: #2e2e30;       /* 더 어두운 회색 */
+  --color-light-100: #adb5bd;      /* 밝은 회색 */
+}
+
+/* HTML 기본 스타일 - 전체 화면 너비, 가로 스크롤 숨김, 부드러운 스크롤 */
+html {
+  width: 100vw;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Body 기본 스타일 - 검은 배경, 세미볼드 폰트 */
+body {
+  width: 100vw;
+  overflow-x: hidden;
+  background-color: #000;
+  color: var(--color-dark-100);
+  font-family: var(--font-semibold);
+}
+
+/* 커스텀 유틸리티 클래스 - 수평/수직 중앙 정렬 */
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+/* 커스텀 유틸리티 클래스 - 양쪽 끝 정렬 */
+@utility flex-between {
+  @apply flex items-center justify-between;
+}
+
+/* 커스텀 유틸리티 클래스 - 세로 방향 중앙 정렬 */
+@utility col-center {
+  @apply flex flex-col items-center justify-center;
+}
+
+/* 커스텀 유틸리티 클래스 - 절대 위치 중앙 정렬 */
+@utility abs-center {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
+/* 커스텀 유틸리티 클래스 - H3 제목 스타일 */
+@utility h3-semibold {
+  @apply font-semibold text-xl text-dark-100;
+}
+
+/* 커스텀 유틸리티 클래스 - 기본 텍스트 스타일 */
+@utility base-semibold {
+  @apply font-semibold text-base text-dark-100;
+}
+
+/* 커스텀 유틸리티 클래스 - 작은 텍스트 스타일 */
+@utility small-medium {
+  @apply font-medium text-xs;
+}
+
+/* 컴포넌트 레이어 - 헤더 스타일 */
+@layer components {
+  /* 헤더 - 고정 위치, 최상단 z-index, 검은 배경 */
+  header {
+    @apply w-screen fixed top-0 left-0 z-50 flex-center bg-black min-h-[7vh];
+
+    /* 네비게이션 - 컨테이너 중앙 정렬, 반응형 패딩 */
+    nav {
+      @apply container mx-auto flex-between px-5 2xl:px-0;
+
+      /* 로고 이미지 - 호버 시 위로 이동 애니메이션 */
+      img {
+        @apply cursor-pointer hover:-translate-y-0.5 transition-all duration-300 ease-in-out;
+
+        /* 버튼 스타일 - 투명 배경, 테두리 없음 */
+        button {
+          @apply bg-transparent border-none outline-none cursor-pointer;
+        }
+      }
+
+      /* 네비게이션 메뉴 리스트 */
+      ul {
+        @apply flex-center gap-8;
+
+        /* 네비게이션 링크 - 모바일에서 숨김, 호버 시 투명도 변화 */
+        a {
+          @apply hidden md:block text-white opacity-80 font-regular text-sm cursor-pointer hover:opacity-100 transition-all duration-300 ease-in-out;
+        }
+      }
+    }
+  }
+
+  /* 히어로 섹션 - 메인 상단 영역 */
+  #hero {
+    @apply h-fit lg:h-[80vh] col-center mt-40 lg:mt-20 2xl:mt-[7vh];
+
+    /* 히어로 콘텐츠 컨테이너 */
+    div {
+      @apply relative z-10 col-center lg:translate-y-16;
+
+      /* 메인 제목 - 반응형 텍스트 크기 */
+      h1 {
+        @apply font-semibold lg:text-3xl 2xl:text-5xl text-white;
+      }
+
+      /* 히어로 이미지 - 컨테이너 중앙 정렬, 2/3 너비 */
+      img {
+        @apply container mx-auto w-2/3;
+      }
+    }
+
+    /* 히어로 비디오 - 중앙 정렬, 반응형 위치 조정 */
+    video {
+      @apply mx-auto lg:translate-y-5 2xl:translate-y-0;
+    }
+
+    /* CTA 버튼 - 호버 시 색상 변화 애니메이션 */
+    button {
+      @apply relative z-10 bg-primary text-white py-2 px-6 mt-10 lg:mt-0 mb-5 rounded-full font-semibold text-lg cursor-pointer hover:bg-white hover:text-black transition-all duration-300 ease-in-out;
+    }
+
+    /* 히어로 텍스트 */
+    p {
+      @apply lg:h3-semibold base-semibold;
+    }
+  }
+
+  /* 제품 뷰어 섹션 - 3D 모델 표시 영역 */
+  #product-viewer {
+    @apply container relative min-h-[93vh] mx-auto px-5 2xl:px-0 mt-40;
+
+    /* 제품 뷰어 제목 */
+    h2 {
+      @apply text-white font-semibold text-3xl lg:text-6xl;
+    }
+
+    /* 제품 컨트롤 패널 */
+    .controls {
+      @apply absolute z-50 bottom-40 lg:bottom-40 2xl:bottom-52 left-1/2 -translate-x-1/2;
+
+      /* 컨트롤 정보 표시 */
+      .info {
+        @apply text-xs text-white bg-black/20 px-2 py-1 rounded-lg;
+      }
+
+      /* 색상 선택 컨트롤 */
+      .color-control {
+        @apply flex-between bg-neutral-800 rounded-full px-6 py-3 gap-4;
+
+        /* 색상 옵션 원형 버튼 */
+        div {
+          @apply size-7 rounded-full cursor-pointer;
+        }
+
+        /* 활성 색상 표시 */
+        .active {
+          @apply ring-5 size-5 ring-light-100;
+        }
+      }
+
+      /* 크기 선택 컨트롤 */
+      .size-control {
+        @apply small-medium flex-between bg-neutral-800 rounded-full px-6 py-2.5 gap-2;
+
+        /* 크기 옵션 버튼 */
+        div {
+          @apply size-8 rounded-full cursor-pointer bg-white text-black flex-center;
+        }
+      }
+    }
+
+    /* 3D 캔버스 영역 */
+    #canvas {
+      @apply !w-full !h-[80vh] lg:!h-dvh relative z-40;
+    }
+  }
+
+  /* 쇼케이스 섹션 - 제품 소개 영역 */
+  #showcase {
+    @apply relative;
+
+    /* 미디어 컨테이너 */
+    .media {
+      @apply relative lg:overflow-hidden;
+
+      /* 쇼케이스 비디오 */
+      video {
+        @apply w-full object-cover object-center;
+      }
+
+      /* 마스크 오버레이 */
+      .mask {
+        @apply absolute h-full top-0 lg:-top-20 xl:top-0;
+
+        /* 마스크 이미지 - 모바일에서 확대, 데스크톱에서 변형 */
+        img {
+          @apply h-full scale-150 lg:scale-100;
+          transform: matrix(80, 0, 0, 80, 0, 0);
+        }
+
+        /* 모바일에서 변형 제거 */
+        @media (max-width: 1024px) {
+          img {
+            transform: matrix(1, 0, 0, 1, 0, 0);
+          }
+        }
+      }
+    }
+
+    /* 쇼케이스 콘텐츠 */
+    .content {
+      @apply relative z-10 my-5 lg:-mt-40 bg-black font-semibold text-xl text-dark-100 lg:opacity-0;
+
+      /* 콘텐츠 래퍼 - 반응형 레이아웃 */
+      .wrapper {
+        @apply container mx-auto px-5 pb-20 2xl:px-0 flex flex-col lg:flex-row justify-center gap-20;
+      }
+
+      /* 메인 제목 */
+      h2 {
+        @apply font-semibold text-3xl lg:text-7xl text-white;
+      }
+
+      /* 서브 제목 */
+      h3 {
+        @apply font-semibold text-xl lg:text-5xl text-white;
+      }
+    }
+  }
+
+  /* 성능 섹션 - 성능 지표 표시 영역 */
+  #performance {
+    @apply w-dvw h-full overflow-hidden pt-20 lg:pt-20 flex flex-col items-center relative;
+
+    /* 성능 섹션 제목 */
+    h2 {
+      @apply font-semibold text-3xl lg:text-6xl text-white max-w-2xl text-center;
+    }
+
+    /* 성능 이미지 래퍼 */
+    .wrapper {
+      @apply w-7xl 2xl:w-[100rem] h-[50vh] lg:h-screen relative;
+
+      /* 성능 이미지 공통 스타일 */
+      img {
+        @apply max-w-40 lg:max-w-[27rem] 2xl:max-w-[35rem] object-cover object-center;
+      }
+
+      /* 성능 이미지 1 - 중앙 하단 */
+      .p1 {
+        @apply absolute bottom-1/2 left-[23%] z-[1] max-sm:left-[33%];
+      }
+
+      /* 성능 이미지 2 - 우측 상단 */
+      .p2 {
+        @apply absolute bottom-[40%] right-[17%] z-[3] max-sm:right-[37%];
+      }
+
+      /* 성능 이미지 3 - 우측 중간 */
+      .p3 {
+        @apply absolute bottom-1/4 right-[15%] z-[2] max-sm:right-[35%];
+      }
+
+      /* 성능 이미지 4 - 우측 하단 */
+      .p4 {
+        @apply absolute bottom-[15%] right-[10%] z-[1] max-sm:right-[30%];
+      }
+
+      /* 성능 이미지 5 - 중앙, 확대 */
+      .p5 {
+        @apply absolute bottom-[20%] left-1/2 -translate-x-1/2 scale-150;
+      }
+
+      /* 성능 이미지 6 - 좌측 중간 */
+      .p6 {
+        @apply absolute bottom-1/4 left-1/4 z-[2] max-sm:left-[35%];
+      }
+
+      /* 성능 이미지 7 - 좌측 하단 */
+      .p7 {
+        @apply absolute bottom-[5%] left-[15%] z-[3] max-sm:left-[35%];
+      }
+    }
+
+    /* 성능 설명 콘텐츠 */
+    .content {
+      @apply mx-auto max-w-xl mt-24;
+
+      /* 성능 설명 텍스트 - 애니메이션을 위한 초기 상태 */
+      p {
+        @apply lg:h3-semibold base-semibold text-center translate-y-10 opacity-0 px-5;
+      }
+    }
+  }
+
+  /* 기능 섹션 - 제품 기능 소개 영역 */
+  #features {
+    @apply pt-40 relative;
+
+    /* 기능 섹션 제목 */
+    h2 {
+      @apply text-white font-semibold text-3xl lg:text-7xl text-center max-w-3xl mx-auto;
+    }
+
+    /* 기능 캔버스 - 3D 기능 표시 영역 */
+    #f-canvas {
+      @apply !w-full !h-dvh relative z-40;
+    }
+
+    /* 기능 설명 박스 */
+    .box {
+      @apply max-w-xs absolute;
+
+      /* 기능 설명 텍스트 */
+      p {
+        @apply lg:h3-semibold base-semibold;
+      }
+    }
+  }
+
+  /* 하이라이트 섹션 - 주요 특징 소개 영역 */
+  #highlights {
+    @apply container mx-auto lg:py-40 max-lg:px-5;
+
+    /* 하이라이트 섹션 제목 */
+    h2 {
+      @apply text-white font-semibold text-3xl lg:text-7xl text-center max-w-3xl mx-auto;
+    }
+
+    /* 하이라이트 서브 제목 */
+    h3 {
+      @apply text-[#F5F5F7] font-semibold text-xl lg:text-3xl text-center mt-10;
+    }
+
+    /* 메이슨리 레이아웃 - 2열 그리드 */
+    .masonry {
+      @apply grid grid-cols-1 lg:grid-cols-2 gap-5 mt-20 text-[#F5F5F7];
+
+      /* 왼쪽 컬럼 */
+      .left-column {
+        @apply flex flex-col justify-between gap-5 opacity-0 -translate-y-5;
+
+        /* 첫 번째 카드 - 배경 이미지 */
+        div:first-of-type {
+          @apply h-full bg-[url(/highlight-bg.png)] bg-no-repeat bg-cover p-10 2xl:pt-32 lg:pt-20 rounded-3xl;
+
+          p {
+            @apply font-semibold text-4xl max-w-2xs;
+          }
+        }
+
+        /* 일반 텍스트 */
+        p {
+          @apply font-semibold text-4xl max-w-2xs;
+        }
+
+        /* 마지막 카드 - 어두운 배경 */
+        div:last-of-type {
+          @apply bg-[#1D1D1F] p-10 rounded-3xl flex items-center gap-7;
+
+          p {
+            @apply font-semibold lg:text-2xl 2xl:text-3xl;
+          }
+        }
+      }
+
+      /* 오른쪽 컬럼 */
+      .right-column {
+        @apply flex flex-col justify-between gap-5 opacity-0 -translate-y-5;
+
+        /* 일반 텍스트 */
+        p {
+          @apply font-semibold text-4xl max-w-2xs;
+        }
+        
+        /* 애플 스타일 그라디언트 카드 */
+        .apple-gradient {
+          @apply p-10 rounded-3xl flex items-center gap-7 relative;
+
+          background: #1d1d1f;
+          background-clip: padding-box; /* !important */
+          border: 3px solid transparent; /* !important */
+
+          /* 그라디언트 테두리 효과 */
+          ::before {
+            content: "";
+            pointer-events: none;
+            position: absolute;
+            inset: 0px;
+            z-index: -1;
+            margin: -5px; /* !important */
+            border-radius: 24px; /* !important */
+            background: linear-gradient(
+              91deg,
+              #0096ff 0%,
+              #bb64ff 42%,
+              #f2416b 74%,
+              #eb7500 100%
+            );
+          }
+
+          p {
+            @apply font-semibold lg:text-2xl 2xl:text-3xl;
+
+            /* 그라디언트 텍스트 */
+            span {
+              background: linear-gradient(
+                91deg,
+                #0096ff 0%,
+                #bb64ff 42%,
+                #f2416b 74%,
+                #eb7500 100%
+              );
+              background-clip: text;
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+            }
+          }
+        }
+
+        /* 마지막 카드 - 녹색 그라디언트 텍스트 */
+        div:last-of-type {
+          @apply h-full bg-[#1D1D1F] p-10 2xl:pt-32 lg:pt-20 rounded-3xl;
+
+          p {
+            @apply font-semibold text-4xl max-w-sm;
+
+            /* 녹색 그라디언트 텍스트 */
+            .green-gradient {
+              background: linear-gradient(90deg, #35a98a 0%, #6dd400 100%);
+              background-clip: text;
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* 푸터 섹션 - 하단 정보 영역 */
+  footer {
+    @apply container mx-auto py-7 max-lg:px-5;
+
+    /* 푸터 정보 영역 */
+    .info {
+      @apply flex-between;
+
+      /* 정보 텍스트 */
+      p {
+        @apply text-sm font-medium;
+
+        /* 강조 텍스트 (파란색) */
+        span {
+          @apply text-primary mx-0.5;
+        }
+      }
+    }
+
+    /* 구분선 */
+    hr {
+      @apply my-7 text-[#424245];
+    }
+
+    /* 푸터 링크 영역 */
+    .links {
+      @apply flex flex-col lg:flex-row lg:items-center justify-between max-lg:mt-5 gap-5 text-sm;
+
+      /* 링크 리스트 */
+      ul {
+        @apply lg:divide-x flex flex-col lg:flex-row gap-2.5;
+
+        /* 링크 아이템 - 호버 시 색상 변화 */
+        li {
+          @apply lg:px-5 cursor-pointer hover:text-primary transition-all duration-300 ease-in-out;
+        }
+      }
+    }
+  }
+}
